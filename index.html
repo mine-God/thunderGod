@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>切割轮播图</title>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <style>
+        .view {
+            width: 560px;
+            height: 300px;
+            box-shadow: 0 0 1px #000;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        li {
+            float: left;
+            width: 112px;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: all 1s;
+        }
+
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        span:nth-child(1) {
+            background-image: url(images/1.jpg);
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        span:nth-child(2) {
+            background-image: url(images/2.jpg);
+            transform: rotateX(180deg) translateZ(150px);
+        }
+
+        span:nth-child(3) {
+            background-image: url(images/3.jpg);
+            transform: rotateX(270deg) translateZ(150px);
+        }
+
+        span:nth-child(4) {
+            background-image: url(images/4.jpg);
+            transform: rotateX(360deg) translateZ(150px);
+        }
+        li:nth-child(2) span{
+            background-position: -112px;
+        }
+        li:nth-child(3) span{
+            background-position: -224px;
+        }
+        li:nth-child(4) span{
+            background-position: -336px;
+        }
+        li:nth-child(5) span{
+            background-position: -448px;
+        }
+        li:nth-child(2){
+            transition-delay: 0.25s;
+        }
+        li:nth-child(3){
+            transition-delay: 0.5s;
+        }
+        li:nth-child(4){
+            transition-delay: 0.75s;
+        }
+        li:nth-child(5){
+            transition-delay: 1s;
+        }
+
+        .view a {
+            position: absolute;
+            top: 50%;
+            margin-top: -30px;
+            z-index: 1;
+            font-size: 60px;
+            cursor: pointer;
+            transition: all .3s;
+            opacity: 0;
+            color:#fff;
+        }
+
+        .view:hover a {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.1)
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="view">
+    <ul>
+        <li>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </li>
+        <li>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </li>
+        <li class="cc">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </li>
+    </ul>
+    <a class="prev fa fa-chevron-left"></a>
+    <a class="next fa fa-chevron-right"></a>
+</div>
+<script>
+    // 1.获取点击按钮
+    var prevBtn=document.querySelector('.prev');
+    var nextBtn=document.querySelector('.next');
+    var num=0;
+    var isTransitionEnd=false;
+    var ul=document.querySelector('ul');
+    var lastLi=ul.lastElementChild;
+    // console.log(lastLi);
+    lastLi.addEventListener('transitionend',function(){
+        isTransitionEnd=false;
+    })
+
+    // 2.给按钮注册点击事件
+    prevBtn.onclick=function(){
+        if(isTransitionEnd==true) return;
+        isTransitionEnd=true;
+        num++;
+        // 3.遍历所有li
+        var aLi=document.querySelectorAll('li');
+        for(var i=0;i<aLi.length;i++){
+            aLi[3].addEventListener("transitionend",function(){
+                console.log(1);
+            })
+            aLi[i].style.webkitTransform='rotateX('+num*90+'deg)';
+        }
+    }
+    nextBtn.onclick=function(){
+        if(isTransitionEnd==true) return;
+        isTransitionEnd=true;
+        num--;
+        // 3.遍历所有li
+        var aLi=document.querySelectorAll('li');
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].style.webkitTransform='rotateX('+num*90+'deg)';
+        }
+    }
+</script>
+</body>
+
+</html>
